@@ -1,0 +1,56 @@
+email-auth-grader 1.0.0  |  dmarc-none.example
+GRADE C  (78/100)
+
+CHECKS
+  MX       PASS
+  SPF      PASS
+  DKIM     PASS
+  DMARC    WARN
+  MTA-STS  WARN
+  TLS-RPT  WARN
+  BIMI     INFO
+
+FINDINGS (worst first)
+  [MEDIUM] DMARC policy is p=none  (-12)
+      Monitoring only: spoofed mail is not blocked. Fine as step one, but plan the move to quarantine and reject once reports are clean.
+  [LOW] DMARC has no rua= reporting address  (-5)
+      Without aggregate reports you cannot see who sends as your domain or what fails alignment.
+  [LOW] No MTA-STS record  (-3)
+      Optional but expected on a mature sending domain: it forces TLS for inbound mail and is what TLS-RPT reports on. Publish the TXT record and host the policy file over HTTPS (start in testing mode).
+  [LOW] No TLS-RPT record  (-2)
+      TLS-RPT sends you daily reports about failed TLS deliveries to your domain. Pairs with MTA-STS.
+  [INFO] No BIMI record (optional)
+      BIMI shows your logo in supporting inboxes. It needs DMARC at quarantine/reject with pct=100, an SVG Tiny PS logo and (for Gmail's checkmark) a VMC/CMC certificate. Not needed for deliverability.
+
+PASSING
+  [PASS] 2 MX record(s) (Google Workspace)
+  [PASS] SPF ends in -all
+  [PASS] SPF uses 1/10 DNS lookups
+  [PASS] DKIM key found: google
+
+DNS RECORDS TO PASTE IN
+  TXT  _dmarc.dmarc-none.example
+      v=DMARC1; p=none; rua=mailto:dmarc-reports@dmarc-none.example
+      # Same record plus a reporting address. Create the mailbox or swap in a report processor.
+  TXT  _mta-sts.dmarc-none.example
+      v=STSv1; id=20261012T090000
+      # Then serve this file at https://mta-sts.dmarc-none.example/.well-known/mta-sts.txt (a valid HTTPS certificate for mta-sts.dmarc-none.example is required):
+      # version: STSv1
+      # mode: testing
+      # mx: aspmx.l.google.com
+      # mx: alt1.aspmx.l.google.com
+      # max_age: 86400
+  TXT  _smtp._tls.dmarc-none.example
+      v=TLSRPTv1; rua=mailto:tls-reports@dmarc-none.example
+      # Create the tls-reports mailbox or point rua= at a report processor.
+
+COLD-EMAIL SEND GUIDANCE (guidance and rules of thumb, not a DNS check)
+  - Send cold outreach from a separate subdomain or secondary domain (for example mail.dmarc-none.example), not your primary domain, so a reputation problem cannot hit your everyday mail.
+  - Warm up new mailboxes: start with a handful of messages a day and raise volume gradually over 3-4 weeks. Keep daily volume per mailbox modest; there is no official number, so treat any figure as a rule of thumb.
+  - Watch Google Postmaster Tools. Google's published guidance is to keep the user-reported spam rate under 0.30% (and ideally under 0.10%).
+  - Add a working unsubscribe/opt-out to every campaign. Bulk marketing mail to Gmail and Yahoo needs one-click unsubscribe (RFC 8058): check a real message with `email-auth-grader headers message.eml`.
+  - Authenticate with the same domain you put in the From header (alignment) and verify DNS changes before launching a campaign.
+  - Keep DMARC at p=none only while you collect reports; plan the move to quarantine.
+  - Fix the high and medium findings above before sending any volume from this domain.
+
+Generated 2026-10-12T09:00:00Z. Graded by SkynetLabs. Fix it for you: cold-email infrastructure setup: https://www.fiverr.com/agencies/skynetjoellc

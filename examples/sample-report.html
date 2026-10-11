@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Email authentication report: dmarc-none.example</title>
+    <style>
+      :root {
+        --ink: #16202b;
+        --muted: #5b6672;
+        --line: #e3e8ee;
+        --bg: #ffffff;
+        --card: #f7f9fb;
+        --accent: #c2410c;
+        --pass: #15803d;
+        --warn: #b45309;
+        --fail: #b91c1c;
+      }
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        margin: 0;
+        background: var(--bg);
+        color: var(--ink);
+        font:
+          16px/1.55 system-ui,
+          -apple-system,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
+      }
+      .wrap {
+        max-width: 860px;
+        margin: 0 auto;
+        padding: 32px 16px 48px;
+      }
+      h1 {
+        font-size: 1.5rem;
+        margin: 0 0 4px;
+      }
+      h2 {
+        font-size: 1.1rem;
+        margin: 32px 0 10px;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 6px;
+      }
+      .sub {
+        color: var(--muted);
+        margin: 0 0 20px;
+        font-size: 0.9rem;
+      }
+      .top {
+        display: flex;
+        gap: 20px;
+        align-items: center;
+        flex-wrap: wrap;
+        background: var(--card);
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 18px;
+      }
+      .grade {
+        width: 92px;
+        height: 92px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2.8rem;
+        font-weight: 700;
+        color: #fff;
+      }
+      .grade-a,
+      .grade-b {
+        background: var(--pass);
+      }
+      .grade-c,
+      .grade-d {
+        background: var(--warn);
+      }
+      .grade-f {
+        background: var(--fail);
+      }
+      .score {
+        font-size: 1.2rem;
+      }
+      .score small {
+        color: var(--muted);
+      }
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+      td {
+        padding: 6px 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .pill {
+        font-size: 0.75rem;
+        font-weight: 700;
+        padding: 2px 8px;
+        border-radius: 99px;
+        background: #e5e7eb;
+      }
+      .pill.pass {
+        background: #dcfce7;
+        color: var(--pass);
+      }
+      .pill.warn {
+        background: #fef3c7;
+        color: var(--warn);
+      }
+      .pill.fail {
+        background: #fee2e2;
+        color: var(--fail);
+      }
+      ul.f {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      ul.f li {
+        border-left: 4px solid var(--line);
+        background: var(--card);
+        padding: 8px 12px;
+        margin: 8px 0;
+        border-radius: 0 8px 8px 0;
+      }
+      ul.f p {
+        margin: 4px 0 0;
+        color: var(--muted);
+        font-size: 0.92rem;
+      }
+      li.sev-critical,
+      li.sev-high {
+        border-color: var(--fail) !important;
+      }
+      li.sev-medium {
+        border-color: var(--warn) !important;
+      }
+      li.sev-low {
+        border-color: #ca8a04 !important;
+      }
+      li.sev-pass {
+        border-color: var(--pass) !important;
+      }
+      .pts {
+        color: var(--muted);
+        font-size: 0.8rem;
+      }
+      .rec {
+        border: 1px solid var(--line);
+        border-radius: 8px;
+        margin: 10px 0;
+        overflow: hidden;
+      }
+      .rt {
+        background: var(--card);
+        padding: 6px 12px;
+        font-weight: 600;
+        font-size: 0.9rem;
+      }
+      pre {
+        margin: 0;
+        padding: 10px 12px;
+        white-space: pre-wrap;
+        word-break: break-all;
+        font:
+          13px/1.45 ui-monospace,
+          Menlo,
+          Consolas,
+          monospace;
+      }
+      .note {
+        margin: 0;
+        padding: 0 12px 10px;
+        color: var(--muted);
+        font-size: 0.85rem;
+        white-space: pre-wrap;
+      }
+      .guide {
+        background: #fffbeb;
+        border: 1px solid #fde68a;
+        border-radius: 10px;
+        padding: 4px 16px 8px;
+      }
+      .guide h2 {
+        border: 0;
+        margin-top: 12px;
+      }
+      .guide .tag {
+        font-size: 0.8rem;
+        color: var(--warn);
+        font-weight: 700;
+      }
+      footer {
+        margin-top: 36px;
+        padding-top: 16px;
+        border-top: 1px solid var(--line);
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+      footer a {
+        color: var(--accent);
+      }
+      @media print {
+        body {
+          font-size: 12px;
+        }
+        .wrap {
+          padding: 0;
+        }
+        .top,
+        .rec,
+        ul.f li {
+          break-inside: avoid;
+        }
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Email authentication report</h1>
+      <p class="sub">
+        dmarc-none.example &middot; generated 2026-10-12T09:00:00Z &middot; email-auth-grader
+        1.0.0 &middot; public DNS only
+      </p>
+      <div class="top">
+        <div class="grade grade-c">C</div>
+        <div class="score">
+          <b>78</b><small> / 100</small><br /><small
+            >Cold-email DNS readiness</small
+          >
+        </div>
+      </div>
+      <h2>Checks</h2>
+      <table>
+        <tr><td>MX</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>SPF</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>DKIM</td><td><span class="pill pass">PASS</span></td></tr>
+<tr><td>DMARC</td><td><span class="pill warn">WARN</span></td></tr>
+<tr><td>MTA-STS</td><td><span class="pill warn">WARN</span></td></tr>
+<tr><td>TLS-RPT</td><td><span class="pill warn">WARN</span></td></tr>
+<tr><td>BIMI</td><td><span class="pill info">INFO</span></td></tr>
+      </table>
+      <h2>Findings</h2>
+      <ul class="f">
+        <li class="sev-medium"><b>MEDIUM</b> DMARC policy is p=none <span class='pts'>-12</span><p>Monitoring only: spoofed mail is not blocked. Fine as step one, but plan the move to quarantine and reject once reports are clean.</p></li>
+<li class="sev-low"><b>LOW</b> DMARC has no rua= reporting address <span class='pts'>-5</span><p>Without aggregate reports you cannot see who sends as your domain or what fails alignment.</p></li>
+<li class="sev-low"><b>LOW</b> No MTA-STS record <span class='pts'>-3</span><p>Optional but expected on a mature sending domain: it forces TLS for inbound mail and is what TLS-RPT reports on. Publish the TXT record and host the policy file over HTTPS (start in testing mode).</p></li>
+<li class="sev-low"><b>LOW</b> No TLS-RPT record <span class='pts'>-2</span><p>TLS-RPT sends you daily reports about failed TLS deliveries to your domain. Pairs with MTA-STS.</p></li>
+<li class="sev-info"><b>INFO</b> No BIMI record (optional)<p>BIMI shows your logo in supporting inboxes. It needs DMARC at quarantine/reject with pct=100, an SVG Tiny PS logo and (for Gmail&#x27;s checkmark) a VMC/CMC certificate. Not needed for deliverability.</p></li>
+      </ul>
+      <h2>DNS records to paste in</h2>
+      <div class='rec'><div class='rt'>TXT &middot; _dmarc.dmarc-none.example</div><pre>v=DMARC1; p=none; rua=mailto:dmarc-reports@dmarc-none.example</pre><p class='note'>Same record plus a reporting address. Create the mailbox or swap in a report processor.</p></div>
+<div class='rec'><div class='rt'>TXT &middot; _mta-sts.dmarc-none.example</div><pre>v=STSv1; id=20261012T090000</pre><p class='note'>Then serve this file at https://mta-sts.dmarc-none.example/.well-known/mta-sts.txt (a valid HTTPS certificate for mta-sts.dmarc-none.example is required):
+version: STSv1
+mode: testing
+mx: aspmx.l.google.com
+mx: alt1.aspmx.l.google.com
+max_age: 86400
+</p></div>
+<div class='rec'><div class='rt'>TXT &middot; _smtp._tls.dmarc-none.example</div><pre>v=TLSRPTv1; rua=mailto:tls-reports@dmarc-none.example</pre><p class='note'>Create the tls-reports mailbox or point rua= at a report processor.</p></div>
+      <div class="guide">
+        <h2>Cold-email send guidance</h2>
+        <p class="tag">GUIDANCE AND RULES OF THUMB - NOT A DNS CHECK</p>
+        <ul>
+          <li>Send cold outreach from a separate subdomain or secondary domain (for example mail.dmarc-none.example), not your primary domain, so a reputation problem cannot hit your everyday mail.</li>
+<li>Warm up new mailboxes: start with a handful of messages a day and raise volume gradually over 3-4 weeks. Keep daily volume per mailbox modest; there is no official number, so treat any figure as a rule of thumb.</li>
+<li>Watch Google Postmaster Tools. Google&#x27;s published guidance is to keep the user-reported spam rate under 0.30% (and ideally under 0.10%).</li>
+<li>Add a working unsubscribe/opt-out to every campaign. Bulk marketing mail to Gmail and Yahoo needs one-click unsubscribe (RFC 8058): check a real message with `email-auth-grader headers message.eml`.</li>
+<li>Authenticate with the same domain you put in the From header (alignment) and verify DNS changes before launching a campaign.</li>
+<li>Keep DMARC at p=none only while you collect reports; plan the move to quarantine.</li>
+<li>Fix the high and medium findings above before sending any volume from this domain.</li>
+        </ul>
+      </div>
+      <footer>
+        Graded by <a href="https://www.skynetjoe.com/?utm_source=github&amp;utm_medium=report&amp;utm_campaign=email-auth-grader">SkynetLabs</a>. This report reads
+        public DNS only; it cannot see sending reputation, rDNS or TLS on your
+        outbound servers.<br />
+        <b>Fix it for you: cold-email infrastructure setup</b>: <a href="https://www.fiverr.com/agencies/skynetjoellc">Fiverr</a> &middot;
+        <a href="https://www.upwork.com/freelancers/muhammadwaseemnasir">Upwork</a>
+      </footer>
+    </div>
+  </body>
+</html>

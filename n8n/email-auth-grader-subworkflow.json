@@ -1,0 +1,62 @@
+{
+  "name": "Email Auth Grader (sub-workflow)",
+  "nodes": [
+    {
+      "parameters": {
+        "inputSource": "workflowInputs",
+        "workflowInputs": { "values": [{ "name": "domain", "type": "string" }] }
+      },
+      "id": "a1f0c2d4-0001-4b6e-9c11-000000000001",
+      "name": "When called by another workflow",
+      "type": "n8n-nodes-base.executeWorkflowTrigger",
+      "typeVersion": 1.1,
+      "position": [0, 0]
+    },
+    {
+      "parameters": {
+        "jsCode": "// Validate BEFORE the shell sees the value (Execute Command runs in a shell).\nconst raw = String($input.first().json.domain || '').trim().toLowerCase();\nconst domain = raw.replace(/^https?:\\/\\//, '').replace(/^.*@/, '').split('/')[0];\nif (!/^(?=.{1,253}$)([a-z0-9]([a-z0-9-]{0,61}[a-z0-9])?\\.)+[a-z]{2,63}$/.test(domain)) {\n  throw new Error('Invalid domain: ' + raw.slice(0, 80));\n}\nreturn [{ json: { domain } }];"
+      },
+      "id": "a1f0c2d4-0002-4b6e-9c11-000000000002",
+      "name": "Validate domain",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [240, 0]
+    },
+    {
+      "parameters": {
+        "command": "=email-auth-grader grade {{ $json.domain }} --format json"
+      },
+      "id": "a1f0c2d4-0003-4b6e-9c11-000000000003",
+      "name": "Run email-auth-grader",
+      "type": "n8n-nodes-base.executeCommand",
+      "typeVersion": 1,
+      "position": [480, 0],
+      "notes": "Needs `pip install email-auth-grader` on the n8n host. Execute Command may be disabled by default on recent n8n versions; enable it deliberately on a self-hosted instance."
+    },
+    {
+      "parameters": {
+        "jsCode": "const report = JSON.parse($input.first().json.stdout);\nconst top = report.findings.filter(f => f.points > 0).sort((a, b) => b.points - a.points)[0];\nreturn [{ json: {\n  domain: report.domain,\n  score: report.score,\n  letter: report.letter,\n  top_issue: top ? top.title : null,\n  records_to_publish: report.records_to_publish,\n  findings_count: report.findings.filter(f => f.points > 0).length,\n  needs_help: report.score < 80\n} }];"
+      },
+      "id": "a1f0c2d4-0004-4b6e-9c11-000000000004",
+      "name": "Summarise grade",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [720, 0]
+    }
+  ],
+  "connections": {
+    "When called by another workflow": {
+      "main": [[{ "node": "Validate domain", "type": "main", "index": 0 }]]
+    },
+    "Validate domain": {
+      "main": [
+        [{ "node": "Run email-auth-grader", "type": "main", "index": 0 }]
+      ]
+    },
+    "Run email-auth-grader": {
+      "main": [[{ "node": "Summarise grade", "type": "main", "index": 0 }]]
+    }
+  },
+  "settings": { "executionOrder": "v1" },
+  "meta": { "templateCredsSetupCompleted": true }
+}

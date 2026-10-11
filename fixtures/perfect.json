@@ -1,0 +1,49 @@
+{
+  "zone": {
+    "perfect.example": {
+      "TXT": [
+        "v=spf1 include:_spf.google.com -all"
+      ],
+      "MX": [
+        "1 aspmx.l.google.com",
+        "5 alt1.aspmx.l.google.com"
+      ]
+    },
+    "_spf.google.com": {
+      "TXT": [
+        "v=spf1 ip4:35.190.247.0/24 ip4:64.233.160.0/19 ~all"
+      ]
+    },
+    "google._domainkey.perfect.example": {
+      "TXT": [
+        "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlYWzmvOor+UroeJabzh+mTt23qczXE6LlVBm5pvo/lTKVQ8AFhWTBjH84N712zFMK8I3SCCh7jY2AQ997rOg7f+nACpumHuoHPh6sTmE1x+goIlEZzo+WkLIDG6yyRXgY+n879iHfyFRnEW/Y+igqpL51h79ykURg71nNKV9calq6Oy+UGl3dA53tQDHvxD+vmr9rAHrI1oomNU8S+PMeNV/LxFcU3yXUMtj8Cy1vCB4tk8xUzyr5gkpHoHGe3C7HmLO/gjF5XOmQcIY8ZXwsgrUdGrbbusG6KTV5PJuM41GAseL30+sdTvOiY2kqYOV0vxTvDB5r9WlzfZz+tIRiQIDAQAB"
+      ]
+    },
+    "_dmarc.perfect.example": {
+      "TXT": [
+        "v=DMARC1; p=reject; rua=mailto:dmarc@perfect.example; adkim=s; aspf=s"
+      ]
+    },
+    "_mta-sts.perfect.example": {
+      "TXT": [
+        "v=STSv1; id=20260101T000000"
+      ]
+    },
+    "_smtp._tls.perfect.example": {
+      "TXT": [
+        "v=TLSRPTv1; rua=mailto:tls@perfect.example"
+      ]
+    },
+    "default._bimi.perfect.example": {
+      "TXT": [
+        "v=BIMI1; l=https://perfect.example/logo.svg"
+      ]
+    }
+  },
+  "https": {
+    "https://mta-sts.perfect.example/.well-known/mta-sts.txt": {
+      "status": 200,
+      "body": "version: STSv1\nmode: enforce\nmx: aspmx.l.google.com\nmx: alt1.aspmx.l.google.com\nmax_age: 604800\n"
+    }
+  }
+}

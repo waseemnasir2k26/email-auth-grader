@@ -1,0 +1,28 @@
+{
+  "zone": {
+    "dkim-1024.example": {
+      "TXT": [
+        "v=spf1 include:_spf.google.com -all"
+      ],
+      "MX": [
+        "1 aspmx.l.google.com",
+        "5 alt1.aspmx.l.google.com"
+      ]
+    },
+    "_spf.google.com": {
+      "TXT": [
+        "v=spf1 ip4:35.190.247.0/24 ip4:64.233.160.0/19 ~all"
+      ]
+    },
+    "google._domainkey.dkim-1024.example": {
+      "TXT": [
+        "v=DKIM1; k=rsa; p=MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCfFRJ88nT+OSqIArDSXoA1cWIErRhdooxgalpTzgwABBB79AOg9TX117Hve69MmI83ghqReOAwLIK1P10VWh/C57BPys71sMsqLEjsii8fQ9AgrgVMcLqrwjyzyU43nEAwvhHVdY2OIPfJin/38d75mTVdxgd6PJKrhybAmb3P0QIDAQAB"
+      ]
+    },
+    "_dmarc.dkim-1024.example": {
+      "TXT": [
+        "v=DMARC1; p=reject; rua=mailto:r@dkim-1024.example"
+      ]
+    }
+  }
+}

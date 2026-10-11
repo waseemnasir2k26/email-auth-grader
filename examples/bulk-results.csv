@@ -1,0 +1,4 @@
+domain,grade,score,mx,spf,dkim,dmarc,mta_sts,tls_rpt,bimi,spf_lookups,dmarc_policy,findings,top_fix,error
+perfect.example,A,100,PASS,PASS,PASS,PASS,PASS,PASS,PASS,1,reject,0,,
+no-dmarc.example,C,70,PASS,PASS,PASS,FAIL,WARN,WARN,INFO,1,none-published,3,No DMARC record,
+dmarc-none.example,C,78,PASS,PASS,PASS,WARN,WARN,WARN,INFO,1,none,4,DMARC policy is p=none,

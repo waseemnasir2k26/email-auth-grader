@@ -1,0 +1,10 @@
+From: Alex Sender <alex@outreach.example>
+To: prospect@example.net
+Subject: Quick question
+Date: Mon, 12 Oct 2026 09:00:00 +0000
+Message-ID: <abc123@outreach.example>
+List-Unsubscribe: <mailto:unsub@outreach.example>
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=outreach.example; s=k1; h=from:to:subject:date:list-unsubscribe; bh=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=; b=BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+Authentication-Results: mx.example.net; dkim=pass header.d=outreach.example; spf=pass; dmarc=pass
+
+Hi there, this is a test fixture body.

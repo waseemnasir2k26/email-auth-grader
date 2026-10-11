@@ -1,0 +1,83 @@
+{
+  "zone": {
+    "spf-overlimit.example": {
+      "TXT": [
+        "v=spf1 include:s1.vendor.example include:s2.vendor.example include:s3.vendor.example include:s4.vendor.example include:s5.vendor.example ~all"
+      ],
+      "MX": [
+        "1 aspmx.l.google.com",
+        "5 alt1.aspmx.l.google.com"
+      ]
+    },
+    "_spf.google.com": {
+      "TXT": [
+        "v=spf1 ip4:35.190.247.0/24 ip4:64.233.160.0/19 ~all"
+      ]
+    },
+    "google._domainkey.spf-overlimit.example": {
+      "TXT": [
+        "v=DKIM1; k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlYWzmvOor+UroeJabzh+mTt23qczXE6LlVBm5pvo/lTKVQ8AFhWTBjH84N712zFMK8I3SCCh7jY2AQ997rOg7f+nACpumHuoHPh6sTmE1x+goIlEZzo+WkLIDG6yyRXgY+n879iHfyFRnEW/Y+igqpL51h79ykURg71nNKV9calq6Oy+UGl3dA53tQDHvxD+vmr9rAHrI1oomNU8S+PMeNV/LxFcU3yXUMtj8Cy1vCB4tk8xUzyr5gkpHoHGe3C7HmLO/gjF5XOmQcIY8ZXwsgrUdGrbbusG6KTV5PJuM41GAseL30+sdTvOiY2kqYOV0vxTvDB5r9WlzfZz+tIRiQIDAQAB"
+      ]
+    },
+    "_dmarc.spf-overlimit.example": {
+      "TXT": [
+        "v=DMARC1; p=quarantine; rua=mailto:dmarc@spf-overlimit.example"
+      ]
+    },
+    "s1.vendor.example": {
+      "TXT": [
+        "v=spf1 include:n1a.vendor.example include:n1b.vendor.example -all"
+      ]
+    },
+    "n1a.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.1 -all"
+      ]
+    },
+    "n1b.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.1 -all"
+      ]
+    },
+    "s2.vendor.example": {
+      "TXT": [
+        "v=spf1 include:n2a.vendor.example include:n2b.vendor.example -all"
+      ]
+    },
+    "n2a.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.2 -all"
+      ]
+    },
+    "n2b.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.2 -all"
+      ]
+    },
+    "s3.vendor.example": {
+      "TXT": [
+        "v=spf1 include:n3a.vendor.example include:n3b.vendor.example -all"
+      ]
+    },
+    "n3a.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.3 -all"
+      ]
+    },
+    "n3b.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:192.0.2.3 -all"
+      ]
+    },
+    "s4.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:198.51.100.4 -all"
+      ]
+    },
+    "s5.vendor.example": {
+      "TXT": [
+        "v=spf1 ip4:198.51.100.5 -all"
+      ]
+    }
+  }
+}
