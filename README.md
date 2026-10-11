@@ -123,7 +123,7 @@ Start at 100, subtract points per finding. Any critical finding (for example SPF
 | MTA-STS policy mismatching MX (enforce mode)             | -15                 |
 | No `rua`, `pct<100`, no MTA-STS, no TLS-RPT              | -5 to -2            |
 
-The full table is in the code (`grader/checks/`), one `points=` per finding.
+The full table is in the code (`grader/checks/`): each finding's penalty is the last number passed to its `res.add(...)` call.
 
 ## Cold-email send guidance (guidance, not a check)
 
