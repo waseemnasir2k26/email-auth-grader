@@ -10,7 +10,7 @@ readme = "README.md"
 requires-python = ">=3.10"
 license = "MIT"
 license-files = ["LICENSE"]
-authors = [{ name = "Waseem Nasir", email = "waseemhome8@gmail.com" }]
+authors = [{ name = "Waseem Nasir", email = "waseem@skynetjoe.com" }]
 keywords = ["email-deliverability", "spf", "dkim", "dmarc", "mta-sts", "bimi", "cold-email", "mcp", "n8n"]
 classifiers = [
   "Programming Language :: Python :: 3",
